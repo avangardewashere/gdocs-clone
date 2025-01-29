@@ -93,7 +93,7 @@ body {
   ol {
     padding: 0 1rem;
     margin: 1.25rem 1rem 1.25rem 0.4rem;
-
+  }
     ul li {
       list-style-type: disc;
       p {
@@ -110,5 +110,5 @@ body {
         margin-bottom: 0.25em;
       }
     }
-  }
+  
 }

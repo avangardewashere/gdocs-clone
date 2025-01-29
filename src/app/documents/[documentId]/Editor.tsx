@@ -1,7 +1,7 @@
 "use client";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-
+import BulletList from '@tiptap/extension-bullet-list'
 export const Editor = () => {
   const editor = useEditor({
     editorProps: {
@@ -11,7 +11,7 @@ export const Editor = () => {
           "focus:outline-none print:border-0 bg-white border border-[#c7c7c7] flex flex-col min-h-[1054px] w-[816px] pt-10 pr-14 pb-10 cursor:text",
       },
     },
-    extensions: [StarterKit],
+    extensions: [StarterKit,BulletList],
     content: "<p>Hello Worlds</p>",
   });
 
