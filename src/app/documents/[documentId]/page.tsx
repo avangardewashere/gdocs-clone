@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
 
-const DocumentsSinglePage = () => {
-  return (
-    <div>
-      
-    </div>
-  )
+interface DocumentIdPageProps {
+  params: Promise<{ documentId: string }>;
 }
 
-export default DocumentsSinglePage
+const DocumentsSinglePage = async ({ params }: DocumentIdPageProps) => {
+  const {documentId} = await params;
+  return <div>{documentId}</div>;
+};
+
+export default DocumentsSinglePage;
