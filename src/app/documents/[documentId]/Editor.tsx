@@ -4,6 +4,7 @@ import StarterKit from "@tiptap/starter-kit";
 import TaskItem from "@tiptap/extension-task-item";
 import Underline from "@tiptap/extension-underline";
 import FontFamily from "@tiptap/extension-font-family";
+import TextStyle from "@tiptap/extension-text-style";
 import TaskList from "@tiptap/extension-task-list";
 import Image from "@tiptap/extension-image";
 import ImageResize from "tiptap-extension-resize-image";
@@ -50,7 +51,7 @@ export const Editor = () => {
     },
     extensions: [
       StarterKit,
-      Underline,
+      Underline,TextStyle,
       FontFamily,
       BulletList,
       TaskItem.configure({ nested: true }),
