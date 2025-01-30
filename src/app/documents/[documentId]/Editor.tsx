@@ -73,7 +73,7 @@ export const Editor = () => {
       Image,
       ImageResize,
       Color,
-      TextAlign,
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
       Highlight.configure({ multicolor: true }),
     ],
     content: `
