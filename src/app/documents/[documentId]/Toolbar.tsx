@@ -1,11 +1,12 @@
 "use client";
 import { cn } from "@/lib/utils";
+import { useEditorStore } from "@/store/use-editor-store";
 import { LucideIcon, Undo2Icon } from "lucide-react";
 import React from "react";
 
 interface ToolbarButtonProps {
   onClick?: () => void;
-  isActive?: boolean;
+  isActive: boolean;
   icon: LucideIcon;
 }
 
@@ -14,6 +15,7 @@ const ToolbarButton = ({
   isActive,
   icon: Icon,
 }: ToolbarButtonProps) => {
+  if(!Icon ) return null
   return (
     <button
       onClick={onClick}
@@ -22,12 +24,15 @@ const ToolbarButton = ({
         isActive && "bg-neutral-200/80"
       )}
     >
+      {/* {Icon} */}
       <Icon />
     </button>
   );
 };
 //Type '{ label: string; icon: Element; onClick: () => void; }[]' is missing the following properties from type '{ label: string; icon: LucideIcon; onClick: () => void; }': label, icon, onClick
 const Toolbar = () => {
+  const { editor } = useEditorStore();
+
   const sections: {
     label: string;
     icon: LucideIcon;
@@ -36,10 +41,10 @@ const Toolbar = () => {
   }[][] = [
     [
       {
-        label: "",
+        label: "Undo",
         icon: Undo2Icon,
         onClick: () => console.log("undo"),
-        isActive: false,
+        // isActive: false,
       },
     ],
   ];
@@ -51,7 +56,8 @@ const Toolbar = () => {
           {...item}
           onClick={item.onClick}
           icon={item.icon}
-          label={item.label}
+          isActive={item.isActive ? true : false}
+          // label={item.label}
         />
       ))}
     </div>

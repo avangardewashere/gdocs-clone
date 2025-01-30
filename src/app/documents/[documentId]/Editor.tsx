@@ -11,8 +11,13 @@ import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
 
 import BulletList from "@tiptap/extension-bullet-list";
+import { useEditorStore } from "@/store/use-editor-store";
 export const Editor = () => {
+  const { setEditor } = useEditorStore();
   const editor = useEditor({
+    onCreate({ editor }) {
+      setEditor;
+    },
     editorProps: {
       attributes: {
         style: "padding-left:56px;padding-right:56px",
@@ -30,7 +35,7 @@ export const Editor = () => {
       TableRow,
       TableHeader,
       Image,
-      ImageResize
+      ImageResize,
     ],
     content: `
     <table>
@@ -48,7 +53,6 @@ export const Editor = () => {
       </tbody>
     </table>
   `,
-
   });
 
   return (
