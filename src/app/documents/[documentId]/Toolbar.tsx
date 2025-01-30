@@ -1,7 +1,16 @@
 "use client";
+import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useEditorStore } from "@/store/use-editor-store";
-import { LucideIcon, Undo2Icon } from "lucide-react";
+import {
+ 
+  BoldIcon,
+  LucideIcon,
+  PrinterIcon,
+  Redo2Icon,
+  SpellCheck2Icon,
+  Undo2Icon,
+} from "lucide-react";
 import React from "react";
 
 interface ToolbarButtonProps {
@@ -32,7 +41,7 @@ const ToolbarButton = ({
 //Type '{ label: string; icon: Element; onClick: () => void; }[]' is missing the following properties from type '{ label: string; icon: LucideIcon; onClick: () => void; }': label, icon, onClick
 const Toolbar = () => {
   const { editor } = useEditorStore();
- 
+
   const sections: {
     label: string;
     icon: LucideIcon;
@@ -43,14 +52,69 @@ const Toolbar = () => {
       {
         label: "Undo",
         icon: Undo2Icon,
-        onClick: () =>{ editor?.chain().focus().undo().run()},
+        onClick: () => {
+          editor?.chain().focus().undo().run();
+        },
         // isActive: false,
+      },
+      {
+        label: "Redo",
+        icon: Redo2Icon,
+        onClick: () => {
+          editor?.chain().focus().redo().run();
+        },
+      },
+      {
+        label: "Print",
+        icon: PrinterIcon,
+        onClick: () => {
+          window.print();
+        },
+      },
+      {
+        label: "Spell Check",
+        icon: SpellCheck2Icon,
+        onClick: () => {
+          const current = editor?.view.dom.getAttribute("spellcheck");
+          editor?.view.dom.setAttribute(
+            "spellcheck",
+            current === "false" ? "true" : "false"
+          );
+        },
+      },
+    ],
+    [
+      {
+        label: "bold",
+        icon: BoldIcon,
+        onClick: () => {
+          editor?.chain().focus().toggleBold().run();
+        },
       },
     ],
   ];
   return (
     <div className="bg-[#f1f4f9] px-2.5 py-0.5 rounded-[24px] min-h-[40px] flex items-center gap-x-0.5 overflow-x-auot">
       {sections[0].map((item) => (
+        <ToolbarButton
+          key={item.label}
+          {...item}
+          onClick={item.onClick}
+          icon={item.icon}
+          isActive={item.isActive ? true : false}
+          // label={item.label}
+        />
+      ))}
+
+      <Separator orientation="vertical" className="h-6 bg-neutral-400" />
+      {/* TODO: Font family */}
+      <Separator orientation="vertical" className="h-6 bg-neutral-400" />
+      {/* TODO: Heading */}
+      <Separator orientation="vertical" className="h-6 bg-neutral-400" />
+      {/* TODO: Font Size */}
+      <Separator orientation="vertical" className="h-6 bg-neutral-400" />
+
+      {sections[1].map((item) => (
         <ToolbarButton
           key={item.label}
           {...item}
