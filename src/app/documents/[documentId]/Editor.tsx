@@ -12,6 +12,8 @@ import Table from "@tiptap/extension-table";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
+import { Color } from "@tiptap/extension-color";
+import Highlight from "@tiptap/extension-highlight";
 
 import BulletList from "@tiptap/extension-bullet-list";
 import { useEditorStore } from "@/store/use-editor-store";
@@ -51,7 +53,8 @@ export const Editor = () => {
     },
     extensions: [
       StarterKit,
-      Underline,TextStyle,
+      Underline,
+      TextStyle,
       FontFamily,
       BulletList,
       TaskItem.configure({ nested: true }),
@@ -62,6 +65,8 @@ export const Editor = () => {
       TableHeader,
       Image,
       ImageResize,
+      Color,
+      Highlight.configure({ multicolor: true }),
     ],
     content: `
     <table>
