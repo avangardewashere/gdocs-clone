@@ -44,6 +44,30 @@ interface ToolbarButtonProps {
   icon: LucideIcon;
 }
 
+const AlignButton = () => {
+  const { editor } = useEditorStore();
+
+  const value = editor?.getAttributes("highlight").color || "#FFF";
+
+  const onChange = (color: ColorResult) => {
+    editor?.chain().focus().setHighlight({ color: color.hex }).run();
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center jstify-center rounded-sm hover:bg-neutral-200/200">
+          <HighlighterIcon />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="p-0">
+        <SketchPicker color={value} onChange={onChange} />
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
+
 const ImageButton = () => {
   const { editor } = useEditorStore();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -81,11 +105,11 @@ const ImageButton = () => {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="h-7 min-w-7 flex flex-col shrink-0 items-center jstify-center rounded-sm hover:bg-neutral-200/200">
+          <button className="h-7 min-w-7 flex flex-col shrink-0 items-center justify-center rounded-sm hover:bg-neutral-200/200">
             <ImageIcon className="size-4" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="p-2.5 flex items-center gap-x-2">
+        <DropdownMenuContent className="p-2.5 flex flex-col items-start gap-x-2">
           <DropdownMenuItem onClick={onUpload}>
             <UploadIcon className="size-4 mr-2" />
             Upload
@@ -110,11 +134,11 @@ const ImageButton = () => {
                 }
               }}
             />
-          </DialogHeader>
+          </DialogHeader> 
+          <DialogFooter>
+            <Button onClick={handleImageUrlSubmit}>Insert</Button>
+          </DialogFooter>
         </DialogContent>
-        <DialogFooter>
-          <Button onClick={handleImageUrlSubmit}>Insert</Button>
-        </DialogFooter>
       </Dialog>
     </>
   );
@@ -454,6 +478,8 @@ const Toolbar = () => {
       {/* TODO: Link */}
       <LinkButton />
       {/* TODO: Image */}
+      <ImageButton />
+
       {/* TODO: Align */}
       {/* TODO: Line Height */}
       {/* TODO: List */}
