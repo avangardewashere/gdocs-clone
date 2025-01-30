@@ -5,6 +5,7 @@ import { useEditorStore } from "@/store/use-editor-store";
 import {
  
   BoldIcon,
+  ItalicIcon,
   LucideIcon,
   PrinterIcon,
   Redo2Icon,
@@ -89,6 +90,13 @@ const Toolbar = () => {
         icon: BoldIcon,
         onClick: () => {
           editor?.chain().focus().toggleBold().run();
+        },
+      },
+      {
+        label: "Italic",
+        icon: ItalicIcon,
+        onClick: () => {
+          editor?.chain().focus().toggleItalic().run();
         },
       },
     ],
