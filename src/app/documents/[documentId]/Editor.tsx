@@ -19,6 +19,7 @@ import TextAlign from "@tiptap/extension-text-align";
 
 import BulletList from "@tiptap/extension-bullet-list";
 import { useEditorStore } from "@/store/use-editor-store";
+import { fontSizeExtension } from "@/extensions/font-size";
 export const Editor = () => {
   const { setEditor } = useEditorStore();
   const editor = useEditor({
@@ -63,6 +64,7 @@ export const Editor = () => {
         defaultProtocol: "https",
       }),
       FontFamily,
+      fontSizeExtension,
       BulletList,
       TaskItem.configure({ nested: true }),
       TaskList,
