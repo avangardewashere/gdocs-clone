@@ -157,6 +157,13 @@ const Toolbar = () => {
           // label={item.label}
         />
       ))}
+      {/* TODO: Text Color */}
+      {/* TODO: Highlight Color */}
+      {/* TODO: Link */}
+      {/* TODO: Image */}
+      {/* TODO: Align */}
+      {/* TODO: Line Height */}
+      {/* TODO: List */}
     </div>
   );
 };
