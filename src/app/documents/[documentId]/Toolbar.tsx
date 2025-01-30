@@ -1,4 +1,5 @@
 "use client";
+import { type ColorResult, CirclePicker } from "react-color";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,12 +22,28 @@ import {
   Undo2Icon,
 } from "lucide-react";
 import React from "react";
-import {type Level} from "@tiptap/extension-heading"
+import { type Level } from "@tiptap/extension-heading";
 interface ToolbarButtonProps {
   onClick?: () => void;
   isActive: boolean;
   icon: LucideIcon;
 }
+
+const TextColorButton = () => {
+  const { editor } = useEditorStore();
+
+  const value = editor?.getAttributes("textStyle").color || "#000000";
+
+  const onCHange = (color: ColorResult) => {
+    editor?.chain().focus().setColor(color.hex).run();
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild></DropdownMenuTrigger>
+    </DropdownMenu>
+  );
+};
 
 const HeadlingLevelButton = () => {
   const { editor } = useEditorStore();
@@ -65,7 +82,11 @@ const HeadlingLevelButton = () => {
               if (value === 0) {
                 editor?.chain().focus().setParagraph().run();
               } else {
-                editor?.chain().focus().toggleHeading({ level: value as Level }).run();
+                editor
+                  ?.chain()
+                  .focus()
+                  .toggleHeading({ level: value as Level })
+                  .run();
               }
             }}
             key={label}
