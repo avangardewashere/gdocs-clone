@@ -23,6 +23,18 @@ interface ToolbarButtonProps {
   icon: LucideIcon;
 }
 
+const FontFamilyButton = () => {
+  const { editor } = useEditorStore();
+
+  const fonts = [
+    { label: "Arial", value: "Arial" },
+    { label: "Times New Roman", value: "Times New Roman" },
+    { label: "Courier New", value: "Courier New" },
+    { label: "Georgia", value: "Georgia" },
+    { label: "Verdana", value: "Verdana" },
+  ];
+};
+
 const ToolbarButton = ({
   onClick,
   isActive,
@@ -134,7 +146,6 @@ const Toolbar = () => {
         onClick: () => {
           editor?.chain().focus().unsetAllMarks().run();
         },
- 
       },
     ],
   ];
