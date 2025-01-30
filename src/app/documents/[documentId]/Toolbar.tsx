@@ -3,6 +3,7 @@ import { type ColorResult, SketchPicker } from "react-color";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
@@ -11,6 +12,7 @@ import { useEditorStore } from "@/store/use-editor-store";
 import {
   BoldIcon,
   HighlighterIcon,
+  ImageIcon,
   ItalicIcon,
   Link2Icon,
   ListTodoIcon,
@@ -19,9 +21,11 @@ import {
   PrinterIcon,
   Redo2Icon,
   RemoveFormattingIcon,
+  SearchIcon,
   SpellCheck2Icon,
   UnderlineIcon,
   Undo2Icon,
+  UploadIcon,
 } from "lucide-react";
 import React, { useState } from "react";
 import { type Level } from "@tiptap/extension-heading";
@@ -33,6 +37,65 @@ interface ToolbarButtonProps {
   icon: LucideIcon;
 }
 
+const ImageButton = () => {
+  const { editor } = useEditorStore();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [imageUrl, setImageUrl] = useState(
+    editor?.getAttributes("link").hef || ""
+  );
+
+  const onChange = (src: string) => {
+    editor?.chain().focus().setImage({ src }).run();
+  };
+
+  const onUpload = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        const imageUrl = URL.createObjectURL(file);
+        onChange(imageUrl);
+      }
+    };
+    input.click();
+  };
+
+  const handleImageUrlSubmit = () => {
+    if (imageUrl) {
+      onChange(imageUrl);
+      setImageUrl("");
+      setIsDialogOpen(false);
+    }
+  };
+
+  return (
+    <>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center jstify-center rounded-sm hover:bg-neutral-200/200">
+          <ImageIcon className="size-4" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="p-2.5 flex items-center gap-x-2">
+        <DropdownMenuItem onClick={onUpload}>
+          <UploadIcon className="size-4 mr-2" />
+          Upload
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => setIsDialogOpen(true)}
+     
+        >
+          <SearchIcon className="size-4 mr-2" />
+          Paste Image Url
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+    </>
+  );
+};
+
 const LinkButton = () => {
   const { editor } = useEditorStore();
   const [value, setValue] = useState(editor?.getAttributes("link").hef || "");
@@ -43,7 +106,9 @@ const LinkButton = () => {
 
   return (
     <DropdownMenu
-      onOpenChange={(open) =>open && setValue(editor?.getAttributes("link").href)}
+      onOpenChange={(open) =>
+        open && setValue(editor?.getAttributes("link").href)
+      }
     >
       <DropdownMenuTrigger asChild>
         <button className="h-7 min-w-7 flex flex-col shrink-0 items-center jstify-center rounded-sm hover:bg-neutral-200/200">
