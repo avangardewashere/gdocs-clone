@@ -124,6 +124,16 @@ body {
     font-size: 1rem;
   }
 
+  /* Link styles */
+  a {
+    @apply text-sky-600;
+    cursor: pointer;
+
+    &:hover {
+      @apply underline
+    }
+  }
+
   /* Table-specific styling */
   table {
     border-collapse: collapse;
@@ -134,7 +144,7 @@ body {
 
     td,
     th {
-      border: 1px solid  #222;
+      border: 1px solid #222;
       box-sizing: border-box;
       min-width: 1em;
       padding: 6px 8px;
@@ -147,7 +157,7 @@ body {
     }
 
     th {
-      background-color:  #c7c7c7;
+      background-color: #c7c7c7;
       font-weight: bold;
       text-align: left;
     }
@@ -186,7 +196,7 @@ body {
   }
 
   /* image */
-  
+
   img {
     display: block;
     height: auto;

@@ -56,7 +56,7 @@ export const Editor = () => {
       StarterKit,
       Underline,
       TextStyle,
-      Link.configure({ openOnClick: false }),
+      Link.configure({ openOnClick: false,autolink:true,defaultProtocol:"https" }),
       FontFamily,
       BulletList,
       TaskItem.configure({ nested: true }),
