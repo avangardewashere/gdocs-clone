@@ -10,6 +10,9 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useEditorStore } from "@/store/use-editor-store";
 import {
+  AlignCenterIcon,
+  AlignLeftIcon,
+  AlignRightIcon,
   BoldIcon,
   HighlighterIcon,
   ImageIcon,
@@ -47,26 +50,45 @@ interface ToolbarButtonProps {
 const AlignButton = () => {
   const { editor } = useEditorStore();
 
-  const value = editor?.getAttributes("highlight").color || "#FFF";
-
-  const onChange = (color: ColorResult) => {
-    editor?.chain().focus().setHighlight({ color: color.hex }).run();
-  };
+  const alignments = [
+    {
+      label: "Align Left",
+      value: "left",
+      icon: AlignLeftIcon,
+    },
+    {
+      label: "Align Center",
+      value: "center",
+      icon: AlignCenterIcon,
+    },
+    {
+      label: "Align Right",
+      value: "right",
+      icon: AlignRightIcon,
+    },
+  ];
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className="h-7 min-w-7 flex flex-col shrink-0 items-center jstify-center rounded-sm hover:bg-neutral-200/200">
-          <HighlighterIcon />
+          <AlignLeftIcon className="size-4" />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="p-0">
-        <SketchPicker color={value} onChange={onChange} />
+      <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
+        {alignments.map(({ label, value, icon: Icon }) => (
+          <button
+            key={value}
+            onClick={() => editor?.chain().focus().setTextAlign(value).run()}
+          >
+            <Icon />
+            <span>{label}</span>
+          </button>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
-
 
 const ImageButton = () => {
   const { editor } = useEditorStore();
@@ -134,7 +156,7 @@ const ImageButton = () => {
                 }
               }}
             />
-          </DialogHeader> 
+          </DialogHeader>
           <DialogFooter>
             <Button onClick={handleImageUrlSubmit}>Insert</Button>
           </DialogFooter>
