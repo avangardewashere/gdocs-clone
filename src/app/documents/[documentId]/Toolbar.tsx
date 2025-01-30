@@ -1,5 +1,6 @@
+"use client";
 import { cn } from "@/lib/utils";
-import { LucideIcon,  Undo2Icon } from "lucide-react";
+import { LucideIcon, Undo2Icon } from "lucide-react";
 import React from "react";
 
 interface ToolbarButtonProps {
@@ -37,14 +38,22 @@ const Toolbar = () => {
       {
         label: "",
         icon: Undo2Icon,
-        onClick: () => {},
+        onClick: () => console.log("undo"),
         isActive: false,
       },
     ],
   ];
   return (
     <div className="bg-[#f1f4f9] px-2.5 py-0.5 rounded-[24px] min-h-[40px] flex items-center gap-x-0.5 overflow-x-auot">
-      Toolbar
+      {sections[0].map((item) => (
+        <ToolbarButton
+          key={item.label}
+          {...item}
+          onClick={item.onClick}
+          icon={item.icon}
+          label={item.label}
+        />
+      ))}
     </div>
   );
 };
