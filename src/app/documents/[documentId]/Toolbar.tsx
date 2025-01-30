@@ -5,6 +5,7 @@ import { useEditorStore } from "@/store/use-editor-store";
 import {
   BoldIcon,
   ItalicIcon,
+  ListTodoIcon,
   LucideIcon,
   MessageSquarePlusIcon,
   PrinterIcon,
@@ -100,13 +101,7 @@ const Toolbar = () => {
           editor?.chain().focus().toggleItalic().run();
         },
       },
-      {
-        label: "Underline",
-        icon: UnderlineIcon,
-        onClick: () => {
-          editor?.chain().focus().toggleUnderline().run();
-        },
-      },
+
       {
         label: "Underline",
         icon: UnderlineIcon,
@@ -123,6 +118,13 @@ const Toolbar = () => {
           alert("later");
         },
         isActive: false,
+      },
+      {
+        label: "List Todo",
+        icon: ListTodoIcon,
+        onClick: () => {
+          editor?.chain().focus().toggleTaskList().run();
+        },
       },
     ],
   ];
@@ -159,11 +161,22 @@ const Toolbar = () => {
       ))}
       {/* TODO: Text Color */}
       {/* TODO: Highlight Color */}
+      <Separator orientation="vertical" className="h-6 bg-neutral-400" />
       {/* TODO: Link */}
       {/* TODO: Image */}
       {/* TODO: Align */}
       {/* TODO: Line Height */}
       {/* TODO: List */}
+      {sections[2].map((item) => (
+        <ToolbarButton
+          key={item.label}
+          {...item}
+          onClick={item.onClick}
+          icon={item.icon}
+          isActive={item.isActive ? true : false}
+          // label={item.label}
+        />
+      ))}
     </div>
   );
 };
