@@ -12,6 +12,7 @@ import {
   BoldIcon,
   HighlighterIcon,
   ItalicIcon,
+  Link2Icon,
   ListTodoIcon,
   LucideIcon,
   MessageSquarePlusIcon,
@@ -22,13 +23,40 @@ import {
   UnderlineIcon,
   Undo2Icon,
 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { type Level } from "@tiptap/extension-heading";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 interface ToolbarButtonProps {
   onClick?: () => void;
   isActive: boolean;
   icon: LucideIcon;
 }
+
+const LinkButton = () => {
+  const { editor } = useEditorStore();
+  const [value, setValue] = useState(editor?.getAttributes("link").hef || "");
+
+  const onChange = (href: string) => {
+    editor?.chain().focus().extendMarkRange("link").setLink({ href }).run();
+  };
+
+  return (
+    <DropdownMenu
+      onOpenChange={(open) =>open && setValue(editor?.getAttributes("link").href)}
+    >
+      <DropdownMenuTrigger asChild>
+        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center jstify-center rounded-sm hover:bg-neutral-200/200">
+          <Link2Icon />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="p-2.5 flex items-center gap-x-2">
+        <Input placeholder="paste link" />
+        <Button onClick={() => onChange(value)}>Apply</Button>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
 
 const HighlightColorButton = () => {
   const { editor } = useEditorStore();
@@ -335,6 +363,7 @@ const Toolbar = () => {
       <HighlightColorButton />
       <Separator orientation="vertical" className="h-6 bg-neutral-400" />
       {/* TODO: Link */}
+      <LinkButton />
       {/* TODO: Image */}
       {/* TODO: Align */}
       {/* TODO: Line Height */}
