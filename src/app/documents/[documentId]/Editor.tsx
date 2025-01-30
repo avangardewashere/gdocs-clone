@@ -16,7 +16,7 @@ export const Editor = () => {
   const { setEditor } = useEditorStore();
   const editor = useEditor({
     onCreate({ editor }) {
-      setEditor;
+      setEditor(editor);
     },
     editorProps: {
       attributes: {

@@ -15,7 +15,7 @@ const ToolbarButton = ({
   isActive,
   icon: Icon,
 }: ToolbarButtonProps) => {
-  if(!Icon ) return null
+  if (!Icon) return null;
   return (
     <button
       onClick={onClick}
@@ -32,7 +32,7 @@ const ToolbarButton = ({
 //Type '{ label: string; icon: Element; onClick: () => void; }[]' is missing the following properties from type '{ label: string; icon: LucideIcon; onClick: () => void; }': label, icon, onClick
 const Toolbar = () => {
   const { editor } = useEditorStore();
-
+ 
   const sections: {
     label: string;
     icon: LucideIcon;
@@ -43,7 +43,7 @@ const Toolbar = () => {
       {
         label: "Undo",
         icon: Undo2Icon,
-        onClick: () => console.log("undo"),
+        onClick: () =>{ editor?.chain().focus().undo().run()},
         // isActive: false,
       },
     ],
