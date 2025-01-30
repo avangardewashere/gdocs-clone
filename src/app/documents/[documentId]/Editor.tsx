@@ -2,6 +2,7 @@
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TaskItem from "@tiptap/extension-task-item";
+import Underline from "@tiptap/extension-underline";
 import TaskList from "@tiptap/extension-task-list";
 import Image from "@tiptap/extension-image";
 import ImageResize from "tiptap-extension-resize-image";
@@ -17,25 +18,27 @@ export const Editor = () => {
   const editor = useEditor({
     onCreate({ editor }) {
       setEditor(editor);
-    },onDestroy(){
-        setEditor(null)
     },
-    onUpdate({editor}){
-        setEditor(editor);
-    },onSelectionUpdate({editor}){
-        setEditor(editor)
+    onDestroy() {
+      setEditor(null);
     },
-    onTransaction({editor}){
-        setEditor(editor)
+    onUpdate({ editor }) {
+      setEditor(editor);
     },
-    onFocus({editor}){
-        setEditor(editor)
+    onSelectionUpdate({ editor }) {
+      setEditor(editor);
     },
-    onBlur({editor}){
-        setEditor(editor)
+    onTransaction({ editor }) {
+      setEditor(editor);
     },
-    onContentError({editor}){
-        setEditor(editor)
+    onFocus({ editor }) {
+      setEditor(editor);
+    },
+    onBlur({ editor }) {
+      setEditor(editor);
+    },
+    onContentError({ editor }) {
+      setEditor(editor);
     },
     editorProps: {
       attributes: {
@@ -46,6 +49,7 @@ export const Editor = () => {
     },
     extensions: [
       StarterKit,
+      Underline,
       BulletList,
       TaskItem.configure({ nested: true }),
       TaskList,

@@ -3,13 +3,14 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { useEditorStore } from "@/store/use-editor-store";
 import {
- 
   BoldIcon,
   ItalicIcon,
   LucideIcon,
+  MessageSquarePlusIcon,
   PrinterIcon,
   Redo2Icon,
   SpellCheck2Icon,
+  UnderlineIcon,
   Undo2Icon,
 } from "lucide-react";
 import React from "react";
@@ -98,6 +99,30 @@ const Toolbar = () => {
         onClick: () => {
           editor?.chain().focus().toggleItalic().run();
         },
+      },
+      {
+        label: "Underline",
+        icon: UnderlineIcon,
+        onClick: () => {
+          editor?.chain().focus().toggleUnderline().run();
+        },
+      },
+      {
+        label: "Underline",
+        icon: UnderlineIcon,
+        onClick: () => {
+          editor?.chain().focus().toggleUnderline().run();
+        },
+      },
+    ],
+    [
+      {
+        label: "Comment",
+        icon: MessageSquarePlusIcon,
+        onClick: () => {
+          alert("later");
+        },
+        isActive: false,
       },
     ],
   ];
