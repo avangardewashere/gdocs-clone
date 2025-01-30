@@ -7,6 +7,7 @@ import FontFamily from "@tiptap/extension-font-family";
 import TextStyle from "@tiptap/extension-text-style";
 import TaskList from "@tiptap/extension-task-list";
 import Image from "@tiptap/extension-image";
+import Link from "@tiptap/extension-link";
 import ImageResize from "tiptap-extension-resize-image";
 import Table from "@tiptap/extension-table";
 import TableHeader from "@tiptap/extension-table-header";
@@ -55,6 +56,7 @@ export const Editor = () => {
       StarterKit,
       Underline,
       TextStyle,
+      Link.configure({ openOnClick: false }),
       FontFamily,
       BulletList,
       TaskItem.configure({ nested: true }),

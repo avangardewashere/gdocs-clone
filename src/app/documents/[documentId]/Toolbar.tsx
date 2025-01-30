@@ -1,5 +1,5 @@
 "use client";
-import { type ColorResult, CirclePicker } from "react-color";
+import { type ColorResult, SketchPicker } from "react-color";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { useEditorStore } from "@/store/use-editor-store";
 import {
   BoldIcon,
+  HighlighterIcon,
   ItalicIcon,
   ListTodoIcon,
   LucideIcon,
@@ -29,18 +30,52 @@ interface ToolbarButtonProps {
   icon: LucideIcon;
 }
 
+const HighlightColorButton = () => {
+  const { editor } = useEditorStore();
+
+  const value = editor?.getAttributes("highlight").color || "#FFF";
+
+  const onChange = (color: ColorResult) => {
+    editor?.chain().focus().setHighlight({ color: color.hex }).run();
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center jstify-center rounded-sm hover:bg-neutral-200/200">
+          <HighlighterIcon />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="p-0">
+        <SketchPicker color={value} onChange={onChange} />
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
 const TextColorButton = () => {
   const { editor } = useEditorStore();
 
   const value = editor?.getAttributes("textStyle").color || "#000000";
 
-  const onCHange = (color: ColorResult) => {
+  const onChange = (color: ColorResult) => {
     editor?.chain().focus().setColor(color.hex).run();
   };
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild></DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
+        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center jstify-center rounded-sm hover:bg-neutral-200/200">
+          <span className="text-cs">A</span>
+          <div
+            className="h-0.5 w-full"
+            style={{ backgroundColor: value }}
+          ></div>
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="p-0">
+        <SketchPicker color={value} onChange={onChange} />
+      </DropdownMenuContent>
     </DropdownMenu>
   );
 };
@@ -294,7 +329,10 @@ const Toolbar = () => {
         />
       ))}
       {/* TODO: Text Color */}
+      <TextColorButton />
+
       {/* TODO: Highlight Color */}
+      <HighlightColorButton />
       <Separator orientation="vertical" className="h-6 bg-neutral-400" />
       {/* TODO: Link */}
       {/* TODO: Image */}
