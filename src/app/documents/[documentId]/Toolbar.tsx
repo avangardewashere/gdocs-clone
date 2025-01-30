@@ -41,6 +41,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import TextAlign from "@tiptap/extension-text-align";
 interface ToolbarButtonProps {
   onClick?: () => void;
   isActive: boolean;
@@ -80,9 +81,13 @@ const AlignButton = () => {
           <button
             key={value}
             onClick={() => editor?.chain().focus().setTextAlign(value).run()}
+            className={cn(
+              "flex items-center gap-x-2 px-2 py-1 bg-neutral-200/80",
+              editor?.isActive({ TextAlign: value }) && " bg-neutral-200/80"
+            )}
           >
-            <Icon />
-            <span>{label}</span>
+            <Icon className="size 4" />
+            <span className="text-sm">{label}</span>
           </button>
         ))}
       </DropdownMenuContent>
@@ -503,6 +508,7 @@ const Toolbar = () => {
       <ImageButton />
 
       {/* TODO: Align */}
+      <AlignButton />
       {/* TODO: Line Height */}
       {/* TODO: List */}
       {sections[2].map((item) => (

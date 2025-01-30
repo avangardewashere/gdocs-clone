@@ -15,6 +15,7 @@ import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
 import { Color } from "@tiptap/extension-color";
 import Highlight from "@tiptap/extension-highlight";
+import TextAlign from "@tiptap/extension-text-align";
 
 import BulletList from "@tiptap/extension-bullet-list";
 import { useEditorStore } from "@/store/use-editor-store";
@@ -56,7 +57,11 @@ export const Editor = () => {
       StarterKit,
       Underline,
       TextStyle,
-      Link.configure({ openOnClick: false,autolink:true,defaultProtocol:"https" }),
+      Link.configure({
+        openOnClick: false,
+        autolink: true,
+        defaultProtocol: "https",
+      }),
       FontFamily,
       BulletList,
       TaskItem.configure({ nested: true }),
@@ -68,6 +73,7 @@ export const Editor = () => {
       Image,
       ImageResize,
       Color,
+      TextAlign,
       Highlight.configure({ multicolor: true }),
     ],
     content: `
