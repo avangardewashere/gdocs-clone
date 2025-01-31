@@ -31,7 +31,7 @@ export const fontSizeExtension = Extension.create({
               }
 
               return {
-                style: `font-size ${attributes.fontSize}`,
+                style: `font-size: ${attributes.fontSize}`,
               };
             },
           },
