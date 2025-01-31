@@ -19,6 +19,7 @@ import {
   ImageIcon,
   ItalicIcon,
   Link2Icon,
+  ListCollapseIcon,
   ListIcon,
   ListOrderedIcon,
   ListTodoIcon,
@@ -65,11 +66,10 @@ const FontSizeButton = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   const updateFontSize = (newSize: string) => {
-  
     const size = parseInt(newSize);
     if (!isNaN(size) && size > 0) {
       editor?.chain().focus().setFontSize(`${size}px`).run();
-      
+
       setFontSize(newSize);
       setInputValue(newSize);
       setIsEditing(false);
@@ -108,7 +108,7 @@ const FontSizeButton = () => {
         onClick={decrement}
         className="h-7 w-7 shrink-0 flex items-center justify-center rounded-sm hover:bg-neutral-200/80"
       >
-        <MinusIcon className="size-4"/>
+        <MinusIcon className="size-4" />
       </button>
       {isEditing ? (
         <input
@@ -130,11 +130,11 @@ const FontSizeButton = () => {
           {currentFontSize}
         </button>
       )}
-            <button
+      <button
         onClick={increment}
         className="h-7 w-7 shrink-0 flex items-center justify-center rounded-sm hover:bg-neutral-200/80"
       >
-        <PlusIcon className="size-4"/>
+        <PlusIcon className="size-4" />
       </button>
     </div>
   );
@@ -161,7 +161,7 @@ const ListButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center jstify-center rounded-sm hover:bg-neutral-200/200">
+        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center justify-center rounded-sm hover:bg-neutral-200/200">
           <ListIcon className="size-4" />
         </button>
       </DropdownMenuTrigger>
@@ -176,6 +176,62 @@ const ListButton = () => {
             )}
           >
             <Icon className="size 4" />
+            <span className="text-sm">{label}</span>
+          </button>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
+const LineHeightButton = () => {
+  const { editor } = useEditorStore();
+
+  const lineHeights = [
+    {
+      label: "Default",
+      value: "normal",
+    },
+
+    {
+      label: "Single",
+      value: "1",
+    },
+
+    {
+      label: "1.15",
+      value: "1.15",
+    },
+
+    {
+      label: "1.5",
+      value: "1.5",
+    },
+
+    {
+      label: "Double",
+      value: "2",
+    },
+  ];
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center justify-center rounded-sm hover:bg-neutral-200/200">
+          <ListCollapseIcon className="size-4" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="p-1 flex flex-col gap-y-1">
+        {lineHeights.map(({ label, value,  }) => (
+          <button
+            key={value}
+            onClick={() => editor?.chain().focus().setLineHeight(value).run()}
+            className={cn(
+              "flex items-center gap-x-2 px-2 py-1 rounded-sm hover:bg-neutral-200/80",
+              editor?.getAttributes("paragraph").lineHeight === value  && " bg-neutral-200/80"
+            )}
+          >
+          
             <span className="text-sm">{label}</span>
           </button>
         ))}
@@ -213,7 +269,7 @@ const AlignButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center jstify-center rounded-sm hover:bg-neutral-200/200">
+        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center justify-center rounded-sm hover:bg-neutral-200/200">
           <AlignLeftIcon className="size-4" />
         </button>
       </DropdownMenuTrigger>
@@ -327,7 +383,7 @@ const LinkButton = () => {
       }
     >
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center jstify-center rounded-sm hover:bg-neutral-200/200">
+        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center justify-center rounded-sm hover:bg-neutral-200/200">
           <Link2Icon />
         </button>
       </DropdownMenuTrigger>
@@ -351,7 +407,7 @@ const HighlightColorButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center jstify-center rounded-sm hover:bg-neutral-200/200">
+        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center justify-center rounded-sm hover:bg-neutral-200/200">
           <HighlighterIcon />
         </button>
       </DropdownMenuTrigger>
@@ -374,7 +430,7 @@ const TextColorButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center jstify-center rounded-sm hover:bg-neutral-200/200">
+        <button className="h-7 min-w-7 flex flex-col shrink-0 items-center justify-center rounded-sm hover:bg-neutral-200/200">
           <span className="text-cs">A</span>
           <div
             className="h-0.5 w-full"
@@ -653,6 +709,7 @@ const Toolbar = () => {
       {/* TODO: Align */}
       <AlignButton />
       {/* TODO: Line Height */}
+      <LineHeightButton />
       {/* TODO: List */}
       <ListButton />
       {sections[2].map((item) => (

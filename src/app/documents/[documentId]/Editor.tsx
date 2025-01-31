@@ -20,6 +20,8 @@ import TextAlign from "@tiptap/extension-text-align";
 import BulletList from "@tiptap/extension-bullet-list";
 import { useEditorStore } from "@/store/use-editor-store";
 import { fontSizeExtension } from "@/extensions/font-size";
+import { lineHeightExtension } from "@/extensions/line-height";
+import Ruler from "./ruler";
 export const Editor = () => {
   const { setEditor } = useEditorStore();
   const editor = useEditor({
@@ -58,6 +60,10 @@ export const Editor = () => {
       StarterKit,
       Underline,
       TextStyle,
+      lineHeightExtension.configure({
+        types: ["heading", "paragraph"],
+        defaultLineHeight: "normal",
+      }),
       Link.configure({
         openOnClick: false,
         autolink: true,
@@ -98,6 +104,7 @@ export const Editor = () => {
 
   return (
     <div className="size-full overflow-x-auto bg-[#F9FBFD] px-4 print:p-0 print:bg-white print:overflow-visible">
+      <Ruler /> 
       <div className="min-w max flex justify-center w-[816px] py-4 print:pu-0 mx-auto print:w-full print:min-w-0">
         <EditorContent editor={editor} />
       </div>
