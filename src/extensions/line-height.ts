@@ -14,7 +14,7 @@ export const lineHeightExtension = Extension.create({
   name: "lineHeight",
   addOptions() {
     return {
-      types: ["textStyle"],
+      types: ["paragraph", "heading"],
       defaultLineHeight: "normal",
     };
   },
@@ -23,16 +23,18 @@ export const lineHeightExtension = Extension.create({
       {
         types: this.options.types,
         attributes: {
-          fontSize: {
-            default: null,
-            parseHTML: (element) => element.style.fontSize,
+          lineHeight: {
+            default: this.options.defaultLineHeight,
+            parseHTML: (element) => {
+              return element.style.lineHeight || this.options.defaultLineHeight;
+            },
             renderHTML: (attributes) => {
-              if (!attributes.fontSize) {
+              if (!attributes.lineHeight) {
                 return {};
               }
 
               return {
-                style: `font-size: ${attributes.fontSize}`,
+                style: `line-height: ${attributes.lineHeight}`,
               };
             },
           },
@@ -42,18 +44,43 @@ export const lineHeightExtension = Extension.create({
   },
   addCommands() {
     return {
-      setFontSize:
-        (fontSize: string) =>
-        ({ chain }) => {
-          return chain().setMark("textStyle", { fontSize }).run();
+      setLineHeight:
+        (lineHeight: string) =>
+        ({ tr, state, dispatch }) => {
+          const { selection } = state;
+          tr = tr.setSelection(selection);
+
+          const { from, to } = selection;
+          state.doc.nodesBetween(from, to, (node, pos) => {
+            if (this.options.types.includes(node.type.name)) {
+              tr = tr.setNodeMarkup(pos, undefined, {
+                ...node.attrs,
+                lineHeight,
+              });
+            }
+          });
+
+          if (dispatch) dispatch(tr);
+          return true;
         },
-      unsetFontSize:
+      unsetLineHeight:
         () =>
-        ({ chain }) => {
-          return chain()
-            .setMark("textStyle", { fontSize: null })
-            .removeEmptyTextStyle()
-            .run();
+        ({ tr, state, dispatch }) => {
+          const { selection } = state;
+
+          tr = tr.setSelection(selection);
+
+          const { from, to } = selection;
+          state.doc.nodesBetween(from, to, (node, pos) => {
+            if (this.options.types.includes(node.type.name)) {
+              tr = tr.setNodeMarkup(pos, undefined, {
+                ...node.attrs,
+                lineHeight: this.options,
+              });
+            }
+          });
+          if (dispatch) dispatch(tr);
+          return true;
         },
     };
   },
